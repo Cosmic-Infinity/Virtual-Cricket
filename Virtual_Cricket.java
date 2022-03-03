@@ -5,13 +5,14 @@ class Virtual_Cricket{
 
     private static Scanner ob = new Scanner(System.in);
     private static Random rn = new Random();
+    static String player1_name="";
     static int matchtype = 0;
     static int p1_choose = 0;
 
     public static void main(){
         System.out.println("What's you name?");
-        String player_name = ob.nextLine();
-        System.out.println("Welcome "+player_name+", to Virtual Cricket!");      
+        player1_name = ob.nextLine();
+        System.out.println("Welcome "+player1_name+", to Virtual Cricket!");      
         System.out.println("Do you need Instructions? (Y|N) || (1|0)");
         String instr = ob.nextLine();
         while(!(instr.equalsIgnoreCase("y") || instr.equalsIgnoreCase("n") || instr.equals("1") || instr.equals("0"))){
@@ -41,15 +42,7 @@ class Virtual_Cricket{
 
         game();
 
-        if(matchtype == 1){
-
-        }
-        else if(matchtype == 2){
-
-        }
-        else if(matchtype == 69420){
-
-        }
+        credits();
     }
 
     public static void toss(){
@@ -114,8 +107,17 @@ class Virtual_Cricket{
         System.out.println("-----------Player 1----------------Computer-----------");
         System.out.println("-----------"+(p1_choose == 1?"Batting":"Bowling")+"-----------------"+(p1_choose == 0?"Batting":"Bowling")+"------------");
         System.out.println("------------------------------------------------------");
-
-        int p1_won = innings2(innings1());
+        
+        int inn1 = innings1();
+        
+        System.out.println("------------------------------------------------------");
+        System.out.println("----------------------INNING  2-----------------------");
+        System.out.println("-----------Player 1----------------Computer-----------");
+        System.out.println("-----------"+(p1_choose == 0?"Batting":"Bowling")+"-----------------"+(p1_choose == 1?"Batting":"Bowling")+"------------");
+        System.out.println("------------------------------------------------------");
+        
+        int p1_won = innings2(inn1);
+        decide(p1_won);
 
     }
 
@@ -132,7 +134,7 @@ class Virtual_Cricket{
                 System.out.println(p2throw);
                 if(p1throw == p2throw){
                     System.out.println("You are Out");
-                    System.out.println("You scored : "+score+". Target for Computer : "+score+1);
+                    System.out.println("You scored : "+score+". Target for Computer : "+(score+1));
                     return (score);
                 }
                 else
@@ -143,12 +145,12 @@ class Virtual_Cricket{
             for(;;){
                 System.out.print("Your throw : ");
                 p1throw = isValid(1,6);
-                System.out.print("\nComputer throw : ");
+                System.out.print("Computer throw : ");
                 p2throw = rn.nextInt(6)+1;
                 System.out.println(p2throw);
                 if(p1throw == p2throw){
                     System.out.println("Computer is Out");
-                    System.out.println("Computer scored : "+score+". Target for You : "+score+1);
+                    System.out.println("Computer scored : "+score+". Target for You : "+(score+1));
                     return (score);
                 }
                 else
@@ -171,7 +173,7 @@ class Virtual_Cricket{
                 System.out.println(p2throw);
                 if(p1throw == p2throw){
                     System.out.println("You are Out");
-                    System.out.println("You scored : "+score+". Target was : "+score+1);
+                    System.out.println("You scored : "+score+". Target was : "+(score+1));
                     if(score==target)
                         return(2);
                     else
@@ -193,7 +195,7 @@ class Virtual_Cricket{
                 System.out.println(p2throw);
                 if(p1throw == p2throw){
                     System.out.println("Compter is Out");
-                    System.out.println("Computer scored : "+score+". Target was : "+score+1);
+                    System.out.println("Computer scored : "+score+". Target was : "+(score+1));
                     if(score==target)
                         return(2);
                     else
@@ -208,17 +210,27 @@ class Virtual_Cricket{
         }
     }
 
+    private static void decide(int input){
+        if(input==1)
+        System.out.println("You WON. Congratulation!");
+        else if(input==0)
+        System.out.println("You LOST. Try again perhaps?");
+        else
+        System.out.println("TIE");
+        
+    }
+    
     private static void instructions(){
         System.out.println("INSTRUCTIONS HERE");
         System.out.println("------------------------------------------------------");
     }
 
     private static int isValid(int min, int max){
-        Scanner ox = new Scanner(System.in);
+        Scanner ob1 = new Scanner(System.in);
         int num = 0;
         try{
             while(num<min || num>max){
-                num = ox.nextInt();
+                num = ob1.nextInt();
                 if(num<min || num>max)
                     System.out.println("Ivalid. Only numbers "+min+" to "+max+" allowed");
             }
@@ -248,5 +260,12 @@ class Virtual_Cricket{
             System.out.println("You chose to BOWL\nComputer chose BATTING");
             Virtual_Cricket.p1_choose = 0;
         }
+    }
+    
+    private static void credits(){
+        System.out.println("Thank you playing Virtual Cricket, "+player1_name);
+        System.out.println("----------------------------------------------------");
+        System.out.println("----------------------------------------------------");
+        System.out.println("A game by Infinity (Shubham Sinha)");
     }
 }
