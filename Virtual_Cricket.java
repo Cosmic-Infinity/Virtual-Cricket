@@ -3,27 +3,16 @@ import java.util.Random;
 
 public class Virtual_Cricket{
 
-    private static Random rn = new Random();
-    static String player1_name="";
-    static String player2_name="Computer";
+    private static Random rn;
+    static String player1_name;
+    static String player2_name;
     static int p1_choose = 9999;
-    static int gamemode = 9999;
-    static int delay = 0;
+    static int gamemode = 10;
+    static int delay = 10;
 
     public static void main(String[] args){
+        initialise();
         Scanner ob = new Scanner(System.in);
-        println("What's you name?");
-
-        player1_name = ob.nextLine();
-        if(player1_name.equalsIgnoreCase("AI")){
-            println("SECRET UNLOCKED!");
-            delay = 500;
-            player1_name ="AI_1";
-            player2_name ="AI_2";
-            gamemode = 1;
-        }
-        else
-            gamemode = 0;
         println("Welcome "+player1_name+", to Virtual Cricket!");      
         println("Do you need Instructions? (Y|N) || (1|0)");
         String instr = gamemode==0 ? ob.nextLine() : ai_return("N");
@@ -42,29 +31,35 @@ public class Virtual_Cricket{
         }
         if(delay_.equalsIgnoreCase("Y") || delay_.equals("1"))
             delay = 333;
-        //---------------------------------------------------------------
 
-        /*
-        println("Choose match type:");
-        println("1. Player vs. +player2_name+");
-        println("2. Player vs. Player");
-        println("?. ???????? vs. ????????");
+        do{
+            toss();
 
-        try{
-        matchtype = ob.nextInt();
-        while(matchtype != 1 && matchtype != 2 && matchtype != 69420){
-        println("Choice not available");
-        matchtype = ob.nextInt();
-        }
-        }catch(Exception e){
-        println("Make a choice in numbers.");
-        }
-         */
-        toss();
+            game();
 
-        game();
+            println("Play Again? (Y|N) || (1|0)");
+            String again = ob.nextLine();
+            while(!(again.equalsIgnoreCase("y") || again.equalsIgnoreCase("n") || again.equals("1") || again.equals("0"))){
+                println("Please answer Y or N for Yes/No");
+                again = ob.nextLine() ;
+            }
+            if(again.equalsIgnoreCase("n") || again.equals("0")){
+                credits();break;
+            }
+        }while(true);
+    }
 
-        credits();
+    private static void initialise(){
+        rn = new Random();
+        player1_name="";
+        player2_name="Computer";
+        p1_choose = 9999;
+        gamemode = 9999;
+        delay=0;
+        Scanner ob = new Scanner(System.in);
+        println("What's you name?");
+        player1_name = ob.nextLine();
+        setmode();
     }
 
     private static String ai_return(String s){
@@ -95,11 +90,11 @@ public class Virtual_Cricket{
         }
         println("----------------------------------------------------");
 
-        print("Throw a number (1-6) : ");
-        int p1_throw =  gamemode==0 ? isValid(1,6) :  Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
+        print("Throw a number (0-6) : ");
+        int p1_throw =  gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
 
-        int p2_throw = rn.nextInt(6)+1;
-        println(player2_name+" threw       : "+p2_throw);
+        int p2_throw = rn.nextInt(7);
+        println(player2_name+" threw   : "+p2_throw);
 
         println("----------------------------------------------------");
 
@@ -162,7 +157,7 @@ public class Virtual_Cricket{
 
         int p1_won = innings2(inn1+1);
         decide(p1_won);
-
+        
         return;
     }
 
@@ -173,8 +168,8 @@ public class Virtual_Cricket{
         if(p1_choose == 1){
             for(;;){
                 print("🢣  "+player1_name+" threw     : ");
-                p1throw = gamemode==0 ? isValid(1,6) :  Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
-                print("   "+player2_name+" threw : ");
+                p1throw = gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
+                print("    "+player2_name+" threw : ");
                 p2throw = rn.nextInt(6)+1;
                 println(p2throw+"\n");
 
@@ -189,15 +184,14 @@ public class Virtual_Cricket{
                     score+=p1throw;
                     println("Score : "+score+"\n");
                 }
-
             }
         }
         else{
             for(;;){
-                print("   "+player1_name+" threw     : ");
+                print("    "+player1_name+" threw     : ");
                 p1throw = gamemode==0 ? isValid(1,6) :  Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
                 print("🢣  "+player2_name+" threw : ");
-                p2throw = rn.nextInt(6)+1;
+                p2throw = rn.nextInt(7);
                 println(p2throw+"\n");
 
                 if(p1throw == p2throw){
@@ -211,10 +205,17 @@ public class Virtual_Cricket{
                     score+=p2throw;
                     println("Score : "+score);//+"  Target : "+"\n");
                 }
-
             }
-
         }
+    }
+
+    private static void setmode(){
+        if(player1_name.equalsIgnoreCase("aI")){
+            setupmode();
+            gamemode = 1;
+        }
+        else
+            gamemode = 0;
     }
 
     private static int innings2(int target){     
@@ -224,8 +225,8 @@ public class Virtual_Cricket{
         if(p1_choose == 0){
             for(;;){
                 print("🢣  "+player1_name+" threw     : ");
-                p1throw = gamemode==0 ? isValid(1,6) :  Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
-                print("   "+player2_name+" threw : ");
+                p1throw = gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
+                print("    "+player2_name+" threw : ");
                 p2throw = rn.nextInt(6)+1;
                 println(p2throw+"\n");
 
@@ -240,7 +241,7 @@ public class Virtual_Cricket{
                         return(0);
                 }
                 else{
-                    score+=p2throw;
+                    score+=p1throw;
                     println("\nScore : "+score+"  |  Target : "+target+"\n");
                     if(score>=target)
                         return (1);
@@ -250,10 +251,10 @@ public class Virtual_Cricket{
         }
         else{
             for(;;){
-                print("   "+player1_name+" threw     : ");
+                print("    "+player1_name+" threw     : ");
                 p1throw = gamemode==0 ? isValid(1,6) : Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
                 print("🢣  "+player2_name+" threw : ");
-                p2throw = rn.nextInt(6)+1;
+                p2throw = rn.nextInt(7);
                 println(p2throw);
 
                 if(p1throw == p2throw){
@@ -267,7 +268,7 @@ public class Virtual_Cricket{
                         return(1);
                 }
                 else{
-                    score+=p1throw;
+                    score+=p2throw;
                     println("\nScore : "+score+"  |  Target : "+target+"\n");
                     if(score>=target)
                         return (0);
@@ -279,14 +280,14 @@ public class Virtual_Cricket{
 
     private static void decide(int input){
         if(input==1)
-            println(""+player1_name+" WON. Congratulation!");
+            println("------------------------------------------------------\n\n\n"+player1_name+" WON. Congratulation!\n\n\n------------------------------------------------------");
         else if(input==0)
             if(gamemode==0)
-                println(""+player1_name+" LOST. Try again perhaps?");
+                println("------------------------------------------------------\n\n\n"+player1_name+" LOST. Try again perhaps?\n\n\n------------------------------------------------------");
             else
-                println(""+player2_name+" WON. Congratulation!");
+                println("------------------------------------------------------\n\n\n"+player2_name+" WON. Congratulation!\n\n\n------------------------------------------------------");
         else
-            println("TIE");
+            println("------------------------------------------------------\n\n\nTIE\n\n\n------------------------------------------------------");
 
     }
 
@@ -295,9 +296,16 @@ public class Virtual_Cricket{
         println("------------------------------------------------------");
     }
 
+    private static void setupmode(){
+        println("SECRET UNLOCKED!");
+        delay = 500;
+        player1_name ="AI_1";
+        player2_name ="AI_2";
+    }
+
     private static int isValid(int min, int max){
         Scanner ob = new Scanner(System.in);
-        int num = 0;
+        int num=-1;
         try{
             while(num<min || num>max){
                 num = ob.nextInt();
@@ -334,10 +342,12 @@ public class Virtual_Cricket{
     }
 
     private static void credits(){
-        println("Thank you playing Virtual Cricket, "+player1_name);
+        if(gamemode==0)
+            println("Thank you playing Virtual Cricket"+(gamemode==0?", "+player1_name:""));
         println("----------------------------------------------------");
         println("----------------------------------------------------");
         println("A game by Infinity (Shubham Sinha)");
+        return;
     }
 
     private static void print(String s){
