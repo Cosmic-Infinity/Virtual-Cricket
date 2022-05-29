@@ -49,25 +49,7 @@ public class Virtual_Cricket{
         }while(true);
     }
 
-    private static void initialise(){
-        rn = new Random();
-        player1_name="";
-        player2_name="Computer";
-        p1_choose = 9999;
-        gamemode = 9999;
-        delay=0;
-        Scanner ob = new Scanner(System.in);
-        println("What's you name?");
-        player1_name = ob.nextLine();
-        setmode();
-    }
-
-    private static String ai_return(String s){
-        println(s);
-        return s;
-    }
-
-    public static void toss(){
+    private static void toss(){
         Scanner ob = new Scanner(System.in);
         println("------------------------------------------------------");
         println("TOSS");
@@ -140,7 +122,7 @@ public class Virtual_Cricket{
         //-------------END Toss Decision Logic-------------------------------
     }
 
-    public static void game(){
+    private static void game(){
         println("\n------------------------------------------------------");
         println("--------------------- INNING  1 ----------------------");
         println("----------- "+(gamemode==0?"Player":player1_name)+" --------------- "+player2_name+" ----------");
@@ -165,12 +147,20 @@ public class Virtual_Cricket{
         int score=0;
         int p1throw=0;
         int p2throw=0;
+        int t1 = 1;
+        int t2 = 2;
+        int t3 = 3;
         if(p1_choose == 1){
             for(;;){
                 print("🢣  "+player1_name+" threw     : ");
                 p1throw = gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
+                t3 = t2;
+                t2 = t1;
+                t1 = p1throw;
                 print("    "+player2_name+" threw : ");
                 p2throw = rn.nextInt(6)+1;
+                if(t1==t2 && t2==t3 && t3!=0)
+                p2throw = rn.nextInt(2)==0?p1throw:p2throw;
                 println(p2throw+"\n");
 
                 if(p1throw == p2throw){
@@ -190,8 +180,13 @@ public class Virtual_Cricket{
             for(;;){
                 print("    "+player1_name+" threw     : ");
                 p1throw = gamemode==0 ? isValid(1,6) :  Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
+                t3 = t2;
+                t2 = t1;
+                t1 = p1throw;
                 print("🢣  "+player2_name+" threw : ");
                 p2throw = rn.nextInt(7);
+                if(t1==t2 && t2==t3 && t3==p2throw)
+                p2throw = p2throw+1>6? p2throw-(rn.nextInt(6)+1) : p2throw+1;
                 println(p2throw+"\n");
 
                 if(p1throw == p2throw){
@@ -222,12 +217,21 @@ public class Virtual_Cricket{
         int score=0;
         int p1throw=0;
         int p2throw=0;
+        int t1 = 1;
+        int t2 = 2;
+        int t3 = 3;
         if(p1_choose == 0){
+            
             for(;;){
                 print("🢣  "+player1_name+" threw     : ");
                 p1throw = gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
+                t3 = t2;
+                t2 = t1;
+                t1 = p1throw;
                 print("    "+player2_name+" threw : ");
                 p2throw = rn.nextInt(6)+1;
+                if(t1==t2 && t2==t3 && t3!=0)
+                p2throw = rn.nextInt(2)==0?p1throw:p2throw;
                 println(p2throw+"\n");
 
                 if(p1throw == p2throw){
@@ -250,11 +254,17 @@ public class Virtual_Cricket{
             }
         }
         else{
+            
             for(;;){
                 print("    "+player1_name+" threw     : ");
                 p1throw = gamemode==0 ? isValid(1,6) : Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
+                t3 = t2;
+                t2 = t1;
+                t1 = p1throw;
                 print("🢣  "+player2_name+" threw : ");
                 p2throw = rn.nextInt(7);
+                if(t1==t2 && t2==t3 && t3==p2throw)
+                p2throw = p2throw+1>6? p2throw-(rn.nextInt(6)+1) : p2throw+1;
                 println(p2throw);
 
                 if(p1throw == p2throw){
@@ -274,8 +284,14 @@ public class Virtual_Cricket{
                         return (0);
                 }
 
-            }
+            } 
+            
         }
+    }
+    
+    private static String ai_return(String s){
+        println(s);
+        return s;
     }
 
     private static void decide(int input){
@@ -292,12 +308,23 @@ public class Virtual_Cricket{
     }
 
     private static void instructions(){
-        println("INSTRUCTIONS HERE");
+        println("------------------------------------------------------");
+        println("1. This game is a digital equilivalent of Hand Cricket.");
+        println("2. You play against Computer.");
+        println("3. There's toss, then Inning 1 and 2, just like a normal game of cricket.");
+        println("4. Every time you and computer throw a number.");
+        println("5. If the numbers match, the batsman is OUT.");
+        println("6. Else the batsman scores the number they throw.");
+        println("7. 0 is a defense for batsman, the bowler cannot throw a 0.");
+        println("8. Concept of Multiple Wickets and Overs don't apply.");
+        println("9. The concept of score and target is the same as a normal game of cricket.");
+        
+        println("\nThat's it! Enjoy the game! ");
         println("------------------------------------------------------");
     }
 
     private static void setupmode(){
-        println("SECRET UNLOCKED!");
+        println("Secret!");
         delay = 500;
         player1_name ="AI_1";
         player2_name ="AI_2";
@@ -318,6 +345,19 @@ public class Virtual_Cricket{
             isValid(min, max);
         }
         return num;
+    }
+    
+    private static void initialise(){
+        rn = new Random();
+        player1_name="";
+        player2_name="Computer";
+        p1_choose = 9999;
+        gamemode = 9999;
+        delay=0;
+        Scanner ob = new Scanner(System.in);
+        println("What's you name?");
+        player1_name = ob.nextLine();
+        setmode();
     }
 
     private static void choose_batball(){
