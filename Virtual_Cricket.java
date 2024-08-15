@@ -152,12 +152,12 @@ public class Virtual_Cricket{
         int t3 = 3;
         if(p1_choose == 1){
             for(;;){
-                print("🢣  "+player1_name+" threw     : ");
+                print("🢣  "+player1_name+" threw\t: ");
                 p1throw = gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
                 t3 = t2;
                 t2 = t1;
                 t1 = p1throw;
-                print("    "+player2_name+" threw : ");
+                print("    "+player2_name+" threw\t: ");
                 p2throw = rn.nextInt(6)+1;
                 if(t1==t2 && t2==t3 && t3!=0)
                 p2throw = rn.nextInt(2)==0?p1throw:p2throw;
@@ -178,12 +178,12 @@ public class Virtual_Cricket{
         }
         else{
             for(;;){
-                print("    "+player1_name+" threw     : ");
+                print("    "+player1_name+" threw\t: ");
                 p1throw = gamemode==0 ? isValid(1,6) :  Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
                 t3 = t2;
                 t2 = t1;
                 t1 = p1throw;
-                print("🢣  "+player2_name+" threw : ");
+                print("🢣  "+player2_name+" threw\t: ");
                 p2throw = rn.nextInt(7);
                 if(t1==t2 && t2==t3 && t3==p2throw)
                 p2throw = p2throw+1>6? p2throw-(rn.nextInt(6)+1) : p2throw+1;
@@ -223,12 +223,12 @@ public class Virtual_Cricket{
         if(p1_choose == 0){
             
             for(;;){
-                print("🢣  "+player1_name+" threw     : ");
+                print("🢣  "+player1_name+" threw\t: ");
                 p1throw = gamemode==0 ? isValid(0,6) :  Integer.parseInt(ai_return((rn.nextInt(7))+""));
                 t3 = t2;
                 t2 = t1;
                 t1 = p1throw;
-                print("    "+player2_name+" threw : ");
+                print("    "+player2_name+" threw\t: ");
                 p2throw = rn.nextInt(6)+1;
                 if(t1==t2 && t2==t3 && t3!=0)
                 p2throw = rn.nextInt(2)==0?p1throw:p2throw;
@@ -256,12 +256,12 @@ public class Virtual_Cricket{
         else{
             
             for(;;){
-                print("    "+player1_name+" threw     : ");
+                print("    "+player1_name+" threw\t: ");
                 p1throw = gamemode==0 ? isValid(1,6) : Integer.parseInt(ai_return((rn.nextInt(6)+1)+""));
                 t3 = t2;
                 t2 = t1;
                 t1 = p1throw;
-                print("🢣  "+player2_name+" threw : ");
+                print("🢣  "+player2_name+" threw\t: ");
                 p2throw = rn.nextInt(7);
                 if(t1==t2 && t2==t3 && t3==p2throw)
                 p2throw = p2throw+1>6? p2throw-(rn.nextInt(6)+1) : p2throw+1;
